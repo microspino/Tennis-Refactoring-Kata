@@ -23,9 +23,12 @@ class TennisGame1
   def score
     result = ""
     tmp_score=0
-    if @a.points == @b.points
-      result = WORDY_ALL[@a.points] || "Deuce"
-    elsif @a.points>=4 or @b.points>=4
+    
+    return WORDY_ALL[@a.points] || "Deuce" if @a.points == @b.points
+    
+    return "#{@a.wordy_points}-#{@b.wordy_points}" if @a.points < 4 && @b.points < 4
+
+    if @a.points>=4 or @b.points>=4
       minusResult = @a.points-@b.points
       if minusResult==1
         result ="Advantage player1"
@@ -35,16 +38,6 @@ class TennisGame1
         result = "Win for player1"
       else
         result ="Win for player2"
-      end
-    else
-      (1...3).each do |i|
-        if (i==1)
-          tmp_score = @a.points
-        else
-          result+="-"
-          tmp_score = @b.points
-        end
-        result += WORDY_PTS[tmp_score]
       end
     end
     result
