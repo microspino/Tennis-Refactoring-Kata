@@ -24,18 +24,17 @@ class TennisGame1
     return WORDY_ALL[@a.points] || "Deuce" if @a.points == @b.points
     return "#{@a.wordy_points}-#{@b.wordy_points}" if @a.points < 4 && @b.points < 4
 
-    if @a.points>=4 or @b.points>=4
-      minusResult = @a.points-@b.points
-      if minusResult==1
-        result ="Advantage player1"
-      elsif minusResult ==-1
-        result ="Advantage player2"
-      elsif minusResult>=2
-        result = "Win for player1"
-      else
-        result ="Win for player2"
-      end
+    diff = @a.points-@b.points
+    result = if diff == 1
+      "Advantage player1"
+    elsif diff ==-1
+      "Advantage player2"
+    elsif diff>=2
+      "Win for player1"
+    else
+      "Win for player2"
     end
+
     result
   end
 end
