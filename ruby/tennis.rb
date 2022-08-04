@@ -51,6 +51,9 @@ class TennisGame2
   end
 
   def score
+    return "Win for #{@a.name}" if @a.points >= 4 && @b.points >= 0 && (@a.points - @b.points) >= 2
+    return "Win for #{@b.name}" if @b.points >= 4 && @a.points >= 0 && (@b.points - @a.points) >= 2
+    
     result = ""
     
     if @a.points > @b.points && @b.points >= 3
@@ -61,25 +64,17 @@ class TennisGame2
       result = "Advantage #{@b.name}"
     end
     
-    if @a.points >= 4 && @b.points >= 0 && (@a.points - @b.points) >= 2
-      result = "Win for #{@a.name}"
-    end
-    
-    if @b.points >= 4 && @a.points >= 0 && (@b.points - @a.points) >= 2
-      result = "Win for #{@b.name}"
-    end
-    
     puts "ne advantage ne win"
     
     puts "#{@a.points} - #{@b.points}"
-    
+
+    w = ["Love", "Fifteen", "Thirty", "Forty"]
     if @a.points == @b.points && @a.points < 3
-      return ["Love", "Fifteen", "Thirty"][@a.points] + "-All"
+      return w[@a.points] + "-All"
     end
     
     return "Deuce" if @a.points == @b.points && @a.points > 2
-    
-    w = ["--", "Fifteen", "Thirty", "Forty"]
+
     if @a.points > 0 && @b.points == 0 && @a.points < 4
       return "#{w[@a.points]}-Love"
     end
