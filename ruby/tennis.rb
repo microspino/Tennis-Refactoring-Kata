@@ -51,17 +51,23 @@ class TennisGame2
 
   def score
     return "Deuce" if @a.points == @b.points && @a.points > 2
-    return "Win for #{@a.name}" if @a.points >= 4 && (@a.points - @b.points) >= 2
-    return "Win for #{@b.name}" if @b.points >= 4 && (@b.points - @a.points) >= 2
 
     w = ["Love", "Fifteen", "Thirty", "Forty"]
     return w[@a.points] + "-All" if @a.points == @b.points && @a.points < 3
-    return "#{w[@a.points]}-Love" if (1..3).cover? @a.points && @b.points == 0
-    return "Love-#{w[@b.points]}" if (1..3).cover? @b.points && @a.points == 0
-    return "#{w[@a.points]}-#{w[@b.points]}" if @a.points < 4 && @b.points < 4 && @a.points != @b.points
     
-    return "Advantage #{@a.name}" if @a.points > @b.points && @b.points >= 3
-    return "Advantage #{@b.name}" if @b.points > @a.points && @a.points >= 3
+    diff = @a.points - @b.points
+
+    if (1..3).cover? diff
+      return "#{w[@a.points]}-Love" if @b.points.zero?
+      return "Love-#{w[@b.points]}" if @a.points.zero?
+    end
+    
+    return "Win for #{@a.name}" if @a.points >= 4 && diff >= 2
+    return "Win for #{@b.name}" if @b.points >= 4 && diff <= -2
+    return "Advantage #{@a.name}" if @b.points >= 3 && diff > 0
+    return "Advantage #{@b.name}" if @a.points >= 3 && diff < 0
+    
+    "#{w[@a.points]}-#{w[@b.points]}"
   end
 end
 
