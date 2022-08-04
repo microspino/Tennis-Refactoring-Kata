@@ -21,11 +21,7 @@ class TennisGame1
   end
   
   def score
-    result = ""
-    tmp_score=0
-    
     return WORDY_ALL[@a.points] || "Deuce" if @a.points == @b.points
-    
     return "#{@a.wordy_points}-#{@b.wordy_points}" if @a.points < 4 && @b.points < 4
 
     if @a.points>=4 or @b.points>=4
