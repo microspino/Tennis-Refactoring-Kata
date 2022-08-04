@@ -5,7 +5,6 @@ WORDY_ALL = %w[Love-All Fifteen-All Thirty-All].freeze
 
 Player = Struct.new(:name, :points) do
   def wordy_points; WORDY_PTS[points]; end
-  def incr!; self.points +=1; end 
 end
 
 # class TennisGame1
@@ -47,19 +46,19 @@ class TennisGame2
   end
 
   def won_point(name)
-    name == @a.name ? @a.incr! : @b.incr!
+    name == @a.name ? @a.points +=1 : @b.points +=1
   end
 
   def score
     return "Deuce" if @a.points == @b.points && @a.points > 2
-    return "Win for #{@a.name}" if @a.points >= 4 && @b.points >= 0 && (@a.points - @b.points) >= 2
-    return "Win for #{@b.name}" if @b.points >= 4 && @a.points >= 0 && (@b.points - @a.points) >= 2
+    return "Win for #{@a.name}" if @a.points >= 4 && (@a.points - @b.points) >= 2
+    return "Win for #{@b.name}" if @b.points >= 4 && (@b.points - @a.points) >= 2
 
     w = ["Love", "Fifteen", "Thirty", "Forty"]
     return w[@a.points] + "-All" if @a.points == @b.points && @a.points < 3
     return "#{w[@a.points]}-Love" if @a.points > 0 && @b.points == 0 && @a.points < 4
     return "Love-#{w[@b.points]}" if @b.points > 0 && @a.points == 0 && @b.points < 4
-    return "#{w[@a.points]}-#{w[@b.points]}" if (@a.points>@b.points && @a.points < 4) || (@b.points>@a.points && @b.points < 4) 
+    return "#{w[@a.points]}-#{w[@b.points]}" if (@a.points > @b.points && @a.points < 4) || (@b.points > @a.points && @b.points < 4) 
     
     return "Advantage #{@a.name}" if @a.points > @b.points && @b.points >= 3
     return "Advantage #{@b.name}" if @b.points > @a.points && @a.points >= 3
