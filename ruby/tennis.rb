@@ -54,27 +54,15 @@ class TennisGame2
     return "Deuce" if @a.points == @b.points && @a.points > 2
     return "Win for #{@a.name}" if @a.points >= 4 && @b.points >= 0 && (@a.points - @b.points) >= 2
     return "Win for #{@b.name}" if @b.points >= 4 && @a.points >= 0 && (@b.points - @a.points) >= 2
+
     w = ["Love", "Fifteen", "Thirty", "Forty"]
     return w[@a.points] + "-All" if @a.points == @b.points && @a.points < 3
     return "#{w[@a.points]}-Love" if @a.points > 0 && @b.points == 0 && @a.points < 4
     return "Love-#{w[@b.points]}" if @b.points > 0 && @a.points == 0 && @b.points < 4
     return "#{w[@a.points]}-#{w[@b.points]}" if (@a.points>@b.points && @a.points < 4) || (@b.points>@a.points && @b.points < 4) 
     
-    #result = ""
-    
-    if @a.points > @b.points && @b.points >= 3
-      result = "Advantage #{@a.name}"
-    end
-    
-    if @b.points > @a.points && @a.points >= 3
-      result = "Advantage #{@b.name}"
-    end
-    
-    puts "ne advantage ne win"
-    
-    puts "#{@a.points} - #{@b.points}"
-
-    result
+    return "Advantage #{@a.name}" if @a.points > @b.points && @b.points >= 3
+    return "Advantage #{@b.name}" if @b.points > @a.points && @a.points >= 3
   end
 end
 
