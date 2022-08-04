@@ -56,9 +56,9 @@ class TennisGame2
 
     w = ["Love", "Fifteen", "Thirty", "Forty"]
     return w[@a.points] + "-All" if @a.points == @b.points && @a.points < 3
-    return "#{w[@a.points]}-Love" if @a.points > 0 && @b.points == 0 && @a.points < 4
-    return "Love-#{w[@b.points]}" if @b.points > 0 && @a.points == 0 && @b.points < 4
-    return "#{w[@a.points]}-#{w[@b.points]}" if (@a.points > @b.points && @a.points < 4) || (@b.points > @a.points && @b.points < 4) 
+    return "#{w[@a.points]}-Love" if (1..3).cover? @a.points && @b.points == 0
+    return "Love-#{w[@b.points]}" if (1..3).cover? @b.points && @a.points == 0
+    return "#{w[@a.points]}-#{w[@b.points]}" if @a.points < 4 && @b.points < 4 && @a.points != @b.points
     
     return "Advantage #{@a.name}" if @a.points > @b.points && @b.points >= 3
     return "Advantage #{@b.name}" if @b.points > @a.points && @a.points >= 3
