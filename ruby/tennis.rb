@@ -177,22 +177,20 @@ class TennisGame3
     @b = Player.new(b_name, 0)
   end
 
-  def won_point(n)
-    @a.name == n ? @a.points += 1 : @b.points += 1
+  def won_point(player_name)
+    player_name == @a.name ? @a.points += 1 : @b.points += 1
   end
 
   def score
     if @a.points < 4 && @b.points < 4 && (@a.points + @b.points) < 6
       s = WORDY_PTS[@a.points]
       @a.points == @b.points ? s + "-All" : s + "-" + WORDY_PTS[@b.points]
+    elsif @a.points == @b.points
+      "Deuce"
     else
-      if @a.points == @b.points
-        "Deuce"
-      else
-        s = @a.points > @b.points ? @a.name : @b.name
-        score_diff = @a.points - @b.points
-        score_diff * score_diff == 1 ? "Advantage " + s : "Win for " + s
-      end
+      who = @a.points > @b.points ? @a.name : @b.name
+      diff = @a.points - @b.points
+      diff * diff == 1 ? "Advantage " + who : "Win for " + who
     end
   end
 end
