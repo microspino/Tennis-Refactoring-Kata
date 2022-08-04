@@ -171,34 +171,28 @@ end
 #   end
 # end
 #
-# class TennisGame3
-#   def initialize(player1Name, player2Name)
-#     @p1N = player1Name
-#     @p2N = player2Name
-#     @p1 = 0
-#     @p2 = 0
-#   end
-#
-#   def won_point(n)
-#     if n == @p1N
-#         @p1 += 1
-#     else
-#         @p2 += 1
-#     end
-#   end
-#
-#   def score
-#     if (@p1 < 4 and @p2 < 4) and (@p1 + @p2 < 6)
-#       p = ["Love", "Fifteen", "Thirty", "Forty"]
-#       s = p[@p1]
-#       @p1 == @p2 ? s + "-All" : s + "-" + p[@p2]
-#     else
-#       if (@p1 == @p2)
-#         "Deuce"
-#       else
-#         s = @p1 > @p2 ? @p1N : @p2N
-#         (@p1-@p2)*(@p1-@p2) == 1 ? "Advantage " + s : "Win for " + s
-#       end
-#     end
-#   end
-# end
+class TennisGame3
+  def initialize(a_name, b_name)
+    @a = Player.new(a_name, 0)
+    @b = Player.new(b_name, 0)
+  end
+
+  def won_point(n)
+    @a.name == n ? @a.points += 1 : @b.points += 1
+  end
+
+  def score
+    if @a.points < 4 && @b.points < 4 && (@a.points + @b.points) < 6
+      s = WORDY_PTS[@a.points]
+      @a.points == @b.points ? s + "-All" : s + "-" + WORDY_PTS[@b.points]
+    else
+      if @a.points == @b.points
+        "Deuce"
+      else
+        s = @a.points > @b.points ? @a.name : @b.name
+        score_diff = @a.points - @b.points
+        score_diff * score_diff == 1 ? "Advantage " + s : "Win for " + s
+      end
+    end
+  end
+end
