@@ -19,12 +19,8 @@ class TennisGame1
     name == 'player1' ? @a.points += 1 : @b.points += 1
   end
   
-  def score
-    return WORDY_ALL[@a.points] || "Deuce" if @a.points == @b.points
-    
-    return "#{@a.wordy_points}-#{@b.wordy_points}" if @a.points < 4 && @b.points < 4
-
-    case @a.points - @b.points
+  def advantage_or_win(score_diff)
+    case score_diff
     when 1
       'Advantage player1'
     when -1
@@ -34,6 +30,14 @@ class TennisGame1
     else
       'Win for player2'
     end
+  end
+  
+  def score
+    return WORDY_ALL[@a.points] || "Deuce" if @a.points == @b.points
+    
+    return "#{@a.wordy_points}-#{@b.wordy_points}" if @a.points < 4 && @b.points < 4
+    
+    advantage_or_win(@a.points - @b.points)
   end
 end
 
