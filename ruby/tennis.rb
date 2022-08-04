@@ -180,17 +180,25 @@ class TennisGame3
   def won_point(player_name)
     player_name == @a.name ? @a.points += 1 : @b.points += 1
   end
+  
+  def advantage?
+    diff =  @a.points - @b.points
+    diff * diff == 1
+  end
+  
+  def tie?
+    @a.points == @b.points
+  end
 
   def score
-    if @a.points < 4 && @b.points < 4 && (@a.points + @b.points) < 6
-      s = WORDY_PTS[@a.points]
-      @a.points == @b.points ? s + "-All" : s + "-" + WORDY_PTS[@b.points]
-    elsif @a.points == @b.points
-      "Deuce"
+    return "Deuce" if tie? && @a.points >= 3
+    return "#{@a.wordy_points}-All" if tie? && @a.points < 4
+    
+    if @a.points < 4 && @b.points < 4
+      "#{@a.wordy_points}-#{@b.wordy_points}"
     else
-      who = @a.points > @b.points ? @a.name : @b.name
-      diff = @a.points - @b.points
-      diff * diff == 1 ? "Advantage " + who : "Win for " + who
+      x = [@a, @b].max_by(&:points)
+      advantage? ? "Advantage #{x.name}" : "Win for #{x.name}"
     end
   end
 end
