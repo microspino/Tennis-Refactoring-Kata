@@ -61,24 +61,26 @@ class TennisGame2
     @a.points == @b.points
   end
 
-  def deuce?
-    tie? && @a.points >= 3
+  def deuce
+    return unless tie? && @a.points >= 3
+
+    'Deuce'
   end
 
-  def love?
-    (1..3).cover?(diff) && (@a.points.zero? || @b.points.zero?)
-  end
+  def love
+    return unless (1..3).cover?(diff) && (@a.points.zero? || @b.points.zero?)
 
-  def love_score
     @b.points.zero? ? "#{WORDY_PTS[@a.points]}-Love" : "Love-#{WORDY_PTS[@b.points]}"
   end
 
-  def score_display
+  def display_score
     "#{WORDY_PTS[@a.points]}-#{WORDY_PTS[@b.points]}"
   end
 
-  def all?
-    tie? && @a.points < 3
+  def all
+    return unless tie? && @a.points < 3
+
+    "#{WORDY_PTS[@a.points]}-All"
   end
 
   def prefix
@@ -93,17 +95,20 @@ class TennisGame2
     @b.points >= 3 && diff.positive? || @a.points >= 3 && diff.negative?
   end
 
-  def advantage_or_win
-    best_player = [@a, @b].max_by(&:points)
-    "#{prefix} #{best_player.name}" if win? || advantage?
+  def best_player_name
+    [@a, @b].max_by(&:points).name
+  end
+
+  def win
+    "#{prefix} #{best_player_name}" if win?
+  end
+
+  def advantage
+    "#{prefix} #{best_player_name}" if advantage?
   end
 
   def score
-    return 'Deuce' if deuce?
-    return "#{WORDY_PTS[@a.points]}-All" if all?
-    return love_score if love?
-
-    advantage_or_win || score_display
+    deuce || all || love || advantage || win || display_score
   end
 end
 
