@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+WORDY_PTS = %w[Love Fifteen Thirty Forty].freeze
+WORDY_ALL = %w[Love-All Fifteen-All Thirty-All].freeze
+
 Player = Struct.new(:name, :points) do
   def wordy_points
     WORDY_PTS[points]
@@ -19,7 +24,7 @@ class TennisGame1
     result = ""
     tmp_score=0
     if @a.points == @b.points
-      result = { 0 => "Love-All", 1 => "Fifteen-All", 2 => "Thirty-All", }.fetch(@a.points, "Deuce")
+      result = WORDY_ALL[@a.points] || "Deuce"
     elsif @a.points>=4 or @b.points>=4
       minusResult = @a.points-@b.points
       if minusResult==1
@@ -39,7 +44,7 @@ class TennisGame1
           result+="-"
           tmp_score = @b.points
         end
-        result += { 0 => "Love", 1 => "Fifteen", 2 => "Thirty", 3 => "Forty", }[tmp_score]
+        result += WORDY_PTS[tmp_score]
       end
     end
     result
