@@ -53,20 +53,20 @@ class TennisGame2
   def score
     result = ""
     
-    if (@a.points > @b.points and @b.points >= 3)
-      result = "Advantage " + @a.name
+    if @a.points > @b.points && @b.points >= 3
+      result = "Advantage #{@a.name}"
     end
     
-    if (@b.points > @a.points and @a.points >= 3)
-      result = "Advantage " + @b.name
+    if @b.points > @a.points && @a.points >= 3
+      result = "Advantage #{@b.name}"
     end
     
-    if (@a.points>=4 and @b.points>=0 and (@a.points-@b.points)>=2)
-      result = "Win for " + @a.name
+    if @a.points >= 4 && @b.points >= 0 && (@a.points - @b.points) >= 2
+      result = "Win for #{@a.name}"
     end
     
-    if (@b.points>=4 and @a.points>=0 and (@b.points-@a.points)>=2)
-      result = "Win for " + @b.name
+    if @b.points >= 4 && @a.points >= 0 && (@b.points - @a.points) >= 2
+      result = "Win for #{@b.name}"
     end
     
     puts "ne advantage ne win"
@@ -74,60 +74,22 @@ class TennisGame2
     puts "#{@a.points} - #{@b.points}"
     
     if @a.points == @b.points && @a.points < 3
-      result = ["Love", "Fifteen", "Thirty"][@a.points]
-      result += "-All"
-      return result
+      return ["Love", "Fifteen", "Thirty"][@a.points] + "-All"
     end
     
     return "Deuce" if @a.points == @b.points && @a.points > 2
-
+    
+    w = ["--", "Fifteen", "Thirty", "Forty"]
     if @a.points > 0 && @b.points == 0 && @a.points < 4
-      a_score = ["--", "Fifteen", "Thirty", "Forty"][@a.points]
-      result = "#{a_score}-Love"
-      return result
+      return "#{w[@a.points]}-Love"
     end
     
     if @b.points > 0 && @a.points == 0 && @b.points < 4
-      b_score = ["--", "Fifteen", "Thirty", "Forty"][@b.points]
-      result = "Love-#{b_score}"
-      return result
+      return "Love-#{w[@b.points]}"
     end
     
-
-    if (@a.points>@b.points and @a.points < 4)
-      if (@a.points==2)
-        p1res="Thirty"
-      end
-      if (@a.points==3)
-        p1res="Forty"
-      end
-      if (@b.points==1)
-        p2res="Fifteen"
-      end
-      if (@b.points==2)
-        p2res="Thirty"
-      end
-
-      result = p1res + "-" + p2res
-      return result
-    end
-    
-    if (@b.points>@a.points and @b.points < 4)
-      if (@b.points==2)
-        p2res="Thirty"
-      end
-      if (@b.points==3)
-        p2res="Forty"
-      end
-      if (@a.points==1)
-        p1res="Fifteen"
-      end
-      if (@a.points==2)
-        p1res="Thirty"
-      end
-      result = p1res + "-" + p2res
-      
-      return result
+    if (@a.points>@b.points && @a.points < 4) || (@b.points>@a.points && @b.points < 4) 
+      return "#{w[@a.points]}-#{w[@b.points]}"
     end
     
     result
