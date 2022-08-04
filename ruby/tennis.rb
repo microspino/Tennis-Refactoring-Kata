@@ -10,7 +10,6 @@ Player = Struct.new(:name, :points) do
 end
 
 class TennisGame1
-
   def initialize(a_name, b_name)
     @a = Player.new(a_name, 0)
     @b = Player.new(b_name, 0)
@@ -22,20 +21,19 @@ class TennisGame1
   
   def score
     return WORDY_ALL[@a.points] || "Deuce" if @a.points == @b.points
+    
     return "#{@a.wordy_points}-#{@b.wordy_points}" if @a.points < 4 && @b.points < 4
 
-    diff = @a.points-@b.points
-    result = if diff == 1
-      "Advantage player1"
-    elsif diff ==-1
-      "Advantage player2"
-    elsif diff>=2
-      "Win for player1"
+    case @a.points - @b.points
+    when 1
+      'Advantage player1'
+    when -1
+      'Advantage player2'
+    when (2..)
+      'Win for player1'
     else
-      "Win for player2"
+      'Win for player2'
     end
-
-    result
   end
 end
 
